@@ -75,32 +75,83 @@ export const Navbar = (props) => {
       window.location="/";
     }
     return (
-    <div className='flex w-full justify-between px-10 p-4'>
-    <a href='/'><h1 className='text-2xl font-bold'>Coursera</h1></a>
-    <div className='gap-4 justify-center items-center flex'>
-      {
-        loggedIn ? <Box component="section"  sx={{ p: 2,height:'25px',justifyContent:'center', display:'flex', alignItems:'center', border: '1px dashed grey' }}>
-        {username}  
-        </Box> : ''
-      }
-    {
-      teacherLoggedIn ? (<Button variant="contained" onClick={clickHandler} >Add course</Button>) : 
-      (<div/> ) 
-    }
-    {
-      studentLoggedIn ? (<Button variant="contained" onClick={mycoursesHandler} >My Courses</Button>) :
-      (<div/>)
-    }
-    {loggedIn ?
-      <Button variant="contained" onClick={dashHandler}>DASHBOARD</Button> :////////
-      <Button variant="contained" onClick={()=>{navigate('/register')}}>REGISTER</Button> 
-      }
-    {
-      loggedIn ?
-      <Button variant="contained" onClick={clickHandlerlogout}>LOG OUT</Button> :
-      <Button variant="contained" onClick={clickHandlerLogin}>LOG IN</Button>
-    }
-    </div>
+      <div className="w-full flex flex-wrap justify-between items-center px-6 py-4 bg-white shadow-md">
+      {/* Logo */}
+      <a href="/" className="text-2xl font-bold text-blue-600">
+        Coursera
+      </a>
+
+      {/* Buttons Section */}
+      <div className="flex flex-wrap gap-4 items-center">
+        {loggedIn ? (
+          <Box
+            component="section"
+            className="border border-dashed border-gray-400 px-4 py-1 rounded-md text-gray-700"
+          >
+            {username}
+          </Box>
+        ) : (
+          ''
+        )}
+        {teacherLoggedIn ? (
+          <Button
+            variant="contained"
+            onClick={clickHandler}
+            className="bg-blue-500 hover:bg-[#25330f] text-white"
+          >
+            Add Course
+          </Button>
+        ) : (
+          <div />
+        )}
+        {studentLoggedIn ? (
+          <Button
+            variant="contained"
+            onClick={mycoursesHandler}
+            className=" hover:bg-[#25330f] text-white"
+          >
+            My Courses
+          </Button>
+        ) : (
+          <div />
+        )}
+        {loggedIn ? (
+          <Button
+            variant="contained"
+            onClick={dashHandler}
+            className=" hover:bg-[#223C63] text-white"
+          >
+            Dashboard
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            onClick={() => {
+              navigate('/register');
+            }}
+            className=" hover:bg-[#34685c] text-gray-800"
+          >
+            Register
+          </Button>
+        )}
+        {loggedIn ? (
+          <Button
+            variant="contained"
+            onClick={clickHandlerlogout}
+            className=" hover:bg-[#A50C0A] text-white"
+          >
+            Log Out
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            onClick={clickHandlerLogin}
+            className="bg-blue-500 hover:bg-blue-600 text-white"
+          >
+            Log In
+          </Button>
+        )}
+      </div>
     </div>
   )
 }

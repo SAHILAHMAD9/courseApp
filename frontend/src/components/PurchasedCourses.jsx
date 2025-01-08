@@ -10,6 +10,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
+import defaultImage from '../assets/Com.jpeg';
 
 export const PurchasedCourses = () => {
     const loggedIn = localStorage.getItem('student') === 'true';
@@ -69,39 +70,42 @@ const PurchasedCourseCard = (props) => {
     const course = props.course;
     const  courseId = course._id;
   return (
-    <Card sx={{ maxWidth: 345, margin: '10px' }}>
-      <CardActionArea>
-            <img
-            component="img"
-            sx={{
-                height: '140px',         
-                objectFit: 'cover',      
-                objectPosition: 'center' 
-            }}
-            image={course.imageLink || 'https://pixabay.com/illustrations/man-laptop-computer-male-office-8702916/'} // Fallback image
-            src={course.imageLink || 'https://pixabay.com/illustrations/man-laptop-computer-male-office-8702916/'}
-            alt={course.title || 'Course Image'}
-            />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {course.title || 'Untitled'}
-          </Typography>
-          <Typography variant="body2" sx={{ color: '#6495ED' }}>
-            {course.description || 'No description available.'}
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'red' }}>
-            Price: ${course.price || '0.00'}
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Course ID: {course._id || 'N/A'}
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Published: {course.published ? 'true' : 'false'}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-      </CardActions>
-    </Card>
+    <Card
+    sx={{ maxWidth: 345, font:'sans' , margin: '10px' }}
+    className="sm:max-w-xs md:max-w-md mx-auto" // Tailwind for responsiveness
+  >
+    <CardActionArea>
+      {/* Responsive Image */}
+      <img
+        component="img"
+        className="w-full h-36 object-cover object-center" // Tailwind for responsiveness
+        sx={{
+          height: '140px',
+          objectFit: 'cover',
+          objectPosition: 'center',
+        }}
+        src={course.imageLink || defaultImage}
+        alt={course.title || 'Course Image'}
+      />
+      {/* Card Content */}
+      <CardContent>
+        <Typography gutterBottom variant="h5" sx={{color:'#1e394b'}} fontSize={30} component="div">
+          {course.title || 'Untitled'}
+        </Typography>
+        <Typography variant="body2" sx={{ color: '#6495ED' }}>
+          {course.description || 'No description available.'}
+        </Typography>
+        <Typography variant="body2" sx={{ color: '#AC301D' }}>
+          Price: ${course.price || '0.00'}
+        </Typography>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          Course ID: {course._id || 'N/A'}
+        </Typography>
+        <Typography variant="body2 " sx={{ color: 'text.secondary' }}>
+          Puchaged: {course.published ? 'true' : 'false'}
+        </Typography>
+      </CardContent>
+    </CardActionArea>
+  </Card>
   );
 };

@@ -10,6 +10,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Chip from '@mui/material/Chip';
+import defaultImage from '../assets/Com.jpeg';
 //                                          ***********   ADMIN EDIT COURSE ***********
 export const Course = () => {
     const loggedIn = localStorage.getItem('teacher') === 'true';
@@ -33,6 +34,7 @@ export const Course = () => {
     
     useEffect(() => {
             if (!loggedIn) {
+              toast.error('Login FIrst');
               navigate('/login'); 
               return;
             }
@@ -70,7 +72,7 @@ export const Course = () => {
             title:course.title,
             description:course.description,
             price:course.price,
-            imageLink:"",
+            imageLink:course.imageLink,
             published:published
           }),
           });
@@ -101,12 +103,12 @@ export const Course = () => {
             console.error('Response error:', data.message || 'Authorization Failed');
             toast.error(data.message || 'Authorization Failed');
           } else {
-            toast.success("Course deleted successfully!");
+            toast.success("Course Deleted Successfully!");
             navigate('/admin/courses');
           }
         } catch (error) {
           console.error("Error deleting course:", error);
-          toast.error("Failed to delete the course. Please try again.");
+          toast.error("Failed to Delete the Course. Please try Again.");
         }
       }
     
@@ -118,62 +120,105 @@ export const Course = () => {
   return (
     <div className='w-full flex flex-col p-4 flex-wrap justify-center items-center bg-slate-200 h-full' >
         {course ? (<div className='flex flex-col justify-center items-center p-4'>
-              <Card sx={{ maxWidth: 345, margin: '1px' }}>
-          <CardActionArea>
-                <img
-                component="img"
-                sx={{
-                    height: '140px',         
-                    objectFit: 'cover',      
-                    objectPosition: 'center' 
-                }}
-                image={c.imageLink || 'https://pixabay.com/illustrations/man-laptop-computer-male-office-8702916/'} // Fallback image
-                src={c.imageLink || 'https://pixabay.com/illustrations/man-laptop-computer-male-office-8702916/'}
-                alt={c.title || 'Course Image'}
-                />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {c.title || 'Untitled'}
-              </Typography>
-              <Typography variant="body2" sx={{ color: '#6495ED' }}>
-                {c.description || 'No description available.'}
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'red' }}>
-                Price: ${c.price || '0.00'}
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Course ID: {c._id || 'N/A'}
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Published: {c.published ? 'true' : 'false'}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-          <Chip
-            label="Delete this Course"
-            onClick={deleteHandler}
-            deleteIcon={<DeleteIcon />}
-            variant="outlined"
-          />
-          </CardActions>
-        </Card>
-        <Card className='flex w-[500px] mt-[150px] p-4 gap-10  items-center flex-col'>
-      <h1 className='text-xl font-semibold'>Add your Course</h1>
-      <TextField className='w-full' type='text' onChange={changeHandler} value={course.title}
-        name='title' label="Title" variant="outlined" />
-      <TextField className='w-full' type='text' onChange={changeHandler} value={course.description} 
-        name='description' label="Description" variant="outlined" />
-      <TextField className='w-full' type='text' onChange={changeHandler} value={course.imageLink} 
-        name='imageLink' label="Image URL" variant="outlined" />
-      <TextField className='w-full' type='number' onChange={changeHandler} value={course.price} 
-        name='price' label="Price" variant="outlined" />
-        <span>
-          <p>Published</p>
-          <Checkbox checked={published} onClick={(e)=>(setPublished(e.target.checked))}/>
-        </span>
-      <Button className='w-full'  variant="contained" onClick={submitHandler} >Submit</Button>
-    </Card>
+          <Card
+  sx={{ maxWidth: 345, margin: '1px' }}
+  className="sm:max-w-xs md:max-w-md mx-auto" >
+  <CardActionArea>
+    {/* Responsive Image */}
+    <img
+      component="img"
+      className="w-full h-36 object-cover object-center" 
+      sx={{
+        height: '140px',
+        objectFit: 'cover',
+        objectPosition: 'center',
+      }}
+      image={course.imageLink || defaultImage}
+      alt={c.title || 'Course Image'}
+    />
+    {/* Card Content */}
+    <CardContent>
+      <Typography gutterBottom variant="h5" fontSize={30} component="div">
+        {c.title || 'Untitled'}
+      </Typography>
+      <Typography variant="body2" sx={{ color: '#6495ED' }}>
+        {c.description || 'No description available.'}
+      </Typography>
+      <Typography variant="body2" sx={{ color: '#AC301D' }}>
+        Price: ${c.price || '0.00'}
+      </Typography>
+      <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        Course ID: {c._id || 'N/A'}
+      </Typography>
+      <Typography variant="body2" sx={{ color: '#E2730D' }}>
+        Published: {c.published ? 'true' : 'false'}
+      </Typography>
+    </CardContent>
+  </CardActionArea>
+  {/* Card Actions */}
+  <CardActions className="flex justify-end">
+    <Chip
+      label="Delete this Course"
+      onClick={deleteHandler}
+      deleteIcon={<DeleteIcon />}
+      variant="outlined"
+    />
+  </CardActions>
+</Card>
+
+{/* Add Course Card */}
+<Card
+  className="flex w-full sm:max-w-sm md:max-w-lg mt-10 p-4 gap-4 items-center flex-col mx-auto"
+>
+  <h1 className="text-xl font-semibold">Add your Course</h1>
+  <TextField
+    className="w-full"
+    type="text"
+    onChange={changeHandler}
+    value={course.title}
+    name="title"
+    label="Title"
+    variant="outlined"
+  />
+  <TextField
+    className="w-full"
+    type="text"
+    onChange={changeHandler}
+    value={course.description}
+    name="description"
+    label="Description"
+    variant="outlined"
+  />
+  <TextField
+    className="w-full"
+    type="text"
+    onChange={changeHandler}
+    value={course.imageLink}
+    name="imageLink"
+    label="Image URL"
+    variant="outlined"
+  />
+  <TextField
+    className="w-full"
+    type="number"
+    onChange={changeHandler}
+    value={course.price}
+    name="price"
+    label="Price"
+    variant="outlined"
+  />
+  <div className="flex items-center w-full">
+    <p className="mr-2">Published</p>
+    <Checkbox
+      checked={published}
+      onClick={(e) => setPublished(e.target.checked)}
+    />
+  </div>
+  <Button className="w-full" variant="contained" onClick={submitHandler}>
+    Submit
+  </Button>
+</Card>
+
         </div>) : (<div>Course not found</div>)}
     </div>    
   )

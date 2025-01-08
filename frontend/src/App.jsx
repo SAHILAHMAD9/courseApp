@@ -35,7 +35,7 @@ if (studentLoggedIn) {
 }
 
   return (
-   <div id='app' className='w-full md:h-screen sm:h-screen md:w-full sm:w-full h-screen mb-0  bg-slate-200'>
+   <div id='app' className='w-full min-h-screen max-h-[5000px]  min-w-full max-w-[5000px]  mb-0  bg-slate-200'>
     <Router>
     <Toaster/>
    <Navbar />

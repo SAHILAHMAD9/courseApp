@@ -35,7 +35,7 @@ export const CreateCourse = (props) => {
             title:course.title,
             description:course.description,
             price:course.price,
-            imageLink:"",
+            imageLink:course.imageLink,
             published:published
           }),
           headers:{
@@ -64,22 +64,61 @@ export const CreateCourse = (props) => {
       {
         loggedIn ? (<div className='flex flex-col mx-auto my-auto p-4 pt-5 w-full h-max items-center justify-center '>
     
-    <Card className='flex w-[500px] mt-[150px] p-4 gap-10  items-center flex-col'>
-      <h1 className='text-xl font-semibold'>Add your Course</h1>
-      <TextField className='w-full' type='text' onChange={changeHandler} value={course.title}
-        name='title' label="Title" variant="outlined" />
-      <TextField className='w-full' type='text' onChange={changeHandler} value={course.description} 
-        name='description' label="Description" variant="outlined" />
-      <TextField className='w-full' type='text' onChange={changeHandler} value={course.imageLink} 
-        name='imageLink' label="Image URL" variant="outlined" />
-      <TextField className='w-full' type='number' onChange={changeHandler} value={course.price} 
-        name='price' label="Price" variant="outlined" />
-        <span>
-          <p>Published</p>
-          <Checkbox checked={published} onClick={(e)=>(setPublished(e.target.checked))}/>
-        </span>
-      <Button className='w-full' onClick={clickHandler} variant="contained"  >Submit</Button>
-    </Card>
+          <Card
+  className="flex w-full sm:max-w-sm md:max-w-lg mt-10 p-4 gap-6 items-center flex-col mx-auto"
+>
+  <h1 className="text-xl font-semibold">Add your Course</h1>
+  <TextField
+    className="w-full"
+    type="text"
+    onChange={changeHandler}
+    value={course.title}
+    name="title"
+    label="Title"
+    variant="outlined"
+  />
+  <TextField
+    className="w-full"
+    type="text"
+    onChange={changeHandler}
+    value={course.description}
+    name="description"
+    label="Description"
+    variant="outlined"
+  />
+  <TextField
+    className="w-full"
+    type="text"
+    onChange={changeHandler}
+    value={course.imageLink}
+    name="imageLink"
+    label="Image URL"
+    variant="outlined"
+  />
+  <TextField
+    className="w-full"
+    type="number"
+    onChange={changeHandler}
+    value={course.price}
+    name="price"
+    label="Price"
+    variant="outlined"
+  />
+  <div className="flex items-center w-full">
+    <p className="mr-2">Published</p>
+    <Checkbox
+      checked={published}
+      onClick={(e) => setPublished(e.target.checked)}
+    />
+  </div>
+  <Button
+    className="w-full"
+    onClick={clickHandler}
+    variant="contained"
+  >
+    Submit
+  </Button>
+</Card>
 </div> ):
 (<Landing/> )
       }

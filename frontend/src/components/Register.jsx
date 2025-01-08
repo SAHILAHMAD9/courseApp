@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
+import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router'; 
 import { Button, Card, TextField,Link, Checkbox, FormControlLabel } from '@mui/material'
 //                                          ***********   ADMIN & USER ***********
@@ -14,86 +15,99 @@ export const Register = (props) => {
   // const loggedIn = props.loggedIn;
   // const setLoggedIn = props.setLoggedIn;
 
+  const validateEmail = (email) => {
+    // Regex to check email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+};
+
   async function adminClickHandler() {
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email address!");
+      return;
+  }
     if (!email || !password) {
       console.log("please enter something");
-      toast.error("Plese enter userame and Password")
+      toast.error("Please check if username and password are filled!");
+      return;
     } else {
+      const url = teacher ? 'http://localhost:3000/admin/signup' : 'http://localhost:3000/users/signup';
+      const bodyData = { username: email, password: password };
       try {
-        if (teacher) {
-          const response =await fetch("http://localhost:3000/admin/signup",{
-            method:"POST",
-            body:JSON.stringify({
-              username:email,
-              password:password
-            }),
-            headers:{
-              'content-type':"application/json"
-            }
-          })
-          if (!response.ok) {
-            console.log(response.json());
-            localStorage.setItem('teacher','false');
-            toast.error("Admin already exist");
-            console.log("Admin already exist");
-          } else {
-            const data = await response.json();
-            localStorage.setItem('token',data.token);
-              toast.success('Successfully registered!')
-              console.log(data);
-              localStorage.setItem('teacher','true');
-              // setLoggedIn(true);
-              navigate('/admin/courses')
-          }
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bodyData),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          console.log('Response error:', data.message || 'Invalid username or password');
+          toast.error(data.message || 'Invalid username or password');
         } else {
-          const response =await fetch("http://localhost:3000/user/signup",{
-            method:"POST",
-            body:JSON.stringify({
-              username:email,
-              password:password
-            }),
-            headers:{
-              'content-type':"application/json"
-            }
-          })
-          if (!response.ok) {
-            console.log(response.json());
-            localStorage.setItem('student','false');
-            toast.error("User already exist");
-            console.log("User already exist");
+          toast.success("Log In successful!");
+          localStorage.setItem('token', data.token);
+          console.log(data);
+          if (teacher) {
+            localStorage.setItem('teacher', 'true');
+            navigate('/admin/courses');
           } else {
-            const data = await response.json();
-            localStorage.setItem('token',data.token);
-              toast.success('Successfully registered!')
-              console.log(data);
-              localStorage.setItem('student','true');
-              // setLoggedIn(true);
-              navigate('/user/courses')
+            localStorage.setItem('student', 'true');
+            navigate('/user/courses');
           }
         }
-        } catch (error) {
+      } catch (error) {
         console.log(error);
-        toast.error("fetch didn't work.")
-        console.log(" in fetching link");
+        toast.error('Server Error');
       }
     }
   }
+  
   if (loggedIn) {
+    toast.error('Already Logged In');
     return(
         navigate('/')
     )
 }
   return (
-    <div className='flex flex-col mx-auto my-auto p-4 w-full md:w-auto items-center justify-center '>
-    <Card className='flex w-[500px] mt-[150px] p-4 gap-10 items-center justify-center flex-col'>
-    <h1 className='text-xl font-medium '>Enter your Email and Password to Register as Admin</h1>
-    <FormControlLabel control={<Checkbox checked={teacher} onClick={(e)=>(setTeacher(e.target.checked))}/>} label="Register as a teacher" />
-    <TextField className='w-full' type='email' onChange={(e)=>{setEmail(e.target.value)}} label="Email" variant="outlined" />
-    <TextField className='w-full' type='password' onChange={(e)=>{setPassword(e.target.value)}} label="Password" variant="outlined" />
-    <Button className='w-full' variant="contained" onClick={adminClickHandler} >Register</Button>
-    Already a user? 
-    <Link href="/login" className=' font-bold text-4xl ' variant="body2">Log In</Link>
-    </Card>
+    <div className='flex flex-col mx-auto my-auto p-4 w-full items-center justify-center'>
+  <Card className='flex w-full sm:max-w-sm md:max-w-lg mt-10 p-4 gap-6 items-center flex-col mx-auto'>
+    <h1 className='text-xl font-semibold'>Enter your Email and Password to Sign Up</h1>
+    <div>
+      <FormControlLabel 
+        control={<Checkbox checked={teacher} onClick={(e) => (setTeacher(e.target.checked))} />} 
+        label="Log In as a teacher" 
+      />
+    </div>
+    <TextField 
+      className='w-full' 
+      type='email' 
+      onChange={(e) => { setEmail(e.target.value) }} 
+      label="Email" 
+      variant="outlined" 
+    />
+    <TextField 
+      className='w-full' 
+      type='password' 
+      onChange={(e) => { setPassword(e.target.value) }} 
+      label="Password" 
+      variant="outlined" 
+    />
+    <Button 
+      className='w-full' 
+      variant="contained" 
+      onClick={adminClickHandler}
+    >
+      Sign Up
+    </Button>
+    <div className='flex flex-col justify-center items-center gap-4 '>
+    <Typography className="mt-2">
+      Existing User? 
+    </Typography>
+      <Link href="/login" variant="body2"> Log In</Link>
+    </div>
+  </Card>
 </div>
   )
 }
