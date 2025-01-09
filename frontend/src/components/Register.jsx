@@ -14,7 +14,7 @@ export const Register = (props) => {
   const navigate = useNavigate();
   // const loggedIn = props.loggedIn;
   // const setLoggedIn = props.setLoggedIn;
-
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const validateEmail = (email) => {
     // Regex to check email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,7 +31,7 @@ export const Register = (props) => {
       toast.error("Please check if username and password are filled!");
       return;
     } else {
-      const url = teacher ? `${PORT}/admin/signup` : `${PORT}/users/signup`;
+      const url = teacher ? `${backendUrl}/admin/signup` : `${backendUrl}/users/signup`;
       const bodyData = { username: email, password: password };
       try {
         const response = await fetch(url, {
