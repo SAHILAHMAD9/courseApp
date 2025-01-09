@@ -14,10 +14,10 @@ export const UserCourses = (props) => {
   const [course , setCourse] = useState([]);
   const navigate  = useNavigate();
 console.log([course]);
-
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
   useEffect(() => {
     console.log("Fetching courses...");
-    fetch(`${PORT}/users/courses`, {
+    fetch(`${backendUrl}/users/courses`, {
       method: 'GET',
       headers: {
         Authorization: "Bearer " + localStorage.getItem('token'),
