@@ -21,7 +21,7 @@ export const Course = () => {
     const [published, setPublished] = useState(false);
     const {courseId} = useParams();
     const navigate = useNavigate();
-
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     function changeHandler(event) {
       const { name , value } = event.target;
@@ -39,7 +39,7 @@ export const Course = () => {
               return;
             }
         console.log("Fetching courses...");
-        fetch(`${PORT}/admin/courses`, {
+        fetch(`${backendUrl}/admin/courses`, {
           method: 'GET',
           headers: {
             Authorization: "Bearer " + localStorage.getItem('token'),
@@ -62,7 +62,7 @@ export const Course = () => {
 
       async function submitHandler() {
         try {
-          const response = await fetch(`${PORT}/admin/courses/${courseId}`, {
+          const response = await fetch(`${backendUrl}/admin/courses/${courseId}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ export const Course = () => {
       
       async function deleteHandler() {
         try {
-          const response = await fetch(`${PORT}/admin/delete/${courseId}`, {
+          const response = await fetch(`${backendUrl}/admin/delete/${courseId}`, {
             method: 'DELETE',
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token'),
