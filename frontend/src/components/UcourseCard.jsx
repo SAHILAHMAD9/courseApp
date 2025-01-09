@@ -17,10 +17,10 @@ export const UcourseCard = (props) => {
     const  courseId = course._id;
     const [purchased , setPurchased] = useState([]);
     const navigate = useNavigate();
-
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     useEffect(() => {
       console.log("Fetching courses...");
-      fetch(`${PORT}/users/purchasedCourses`, {
+      fetch(`${backendUrl}/users/purchasedCourses`, {
         method: 'GET',
         headers: {
           Authorization: "Bearer " + localStorage.getItem('token'),
@@ -48,7 +48,7 @@ export const UcourseCard = (props) => {
       return ;
     } else {
       try {
-        const response = await fetch(`${PORT}/users/courses/${courseId}`, {
+        const response = await fetch(`${backendUrl}/users/courses/${courseId}`, {
           method:"POST",
           headers: {
               Authorization: "Bearer " + localStorage.getItem('token'),
