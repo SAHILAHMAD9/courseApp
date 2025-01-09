@@ -5,7 +5,11 @@ const cors = require('cors');
 require('dotenv').config();
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin:['https://course-app-s.vercel.app/'],
+  methods:["GET" ,'PUT' ,"POST" , "DELETE"],
+  credentials: true
+}));
 const SECRET = "top s3cr3t";
 const { connectDB } = require('./db');
 connectDB();
