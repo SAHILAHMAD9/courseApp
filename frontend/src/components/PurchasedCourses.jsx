@@ -18,11 +18,11 @@ export const PurchasedCourses = () => {
     // const setLoggedIn = props.setLoggedIn;
     const [course , setCourse] = useState([]);
     const navigate  = useNavigate();
-  
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
     useEffect(() => {
       console.log("Fetching courses...");
     
-      fetch(`${PORT}/users/purchasedCourses`, {
+      fetch(`${backendUrl}/users/purchasedCourses`, {
         method: 'GET',
         headers: {
           Authorization: "Bearer " + localStorage.getItem('token'),
