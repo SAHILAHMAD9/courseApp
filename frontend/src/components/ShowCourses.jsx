@@ -17,7 +17,7 @@ export const ShowCourses = (props) => {
   useEffect(() => {
     console.log("Fetching courses...");
   
-    fetch('http://localhost:3000/admin/courses/', {
+    fetch(`${PORT}/admin/courses/`, {
       method: 'GET',
       headers: {
         Authorization: "Bearer " + localStorage.getItem('token'),

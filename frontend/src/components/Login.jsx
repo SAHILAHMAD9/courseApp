@@ -33,7 +33,7 @@ export const Login = (props) => {
        }else{
        if (teacher == true) {
         try {
-            const response = await fetch('http://localhost:3000/admin/login',{
+            const response = await fetch(`${PORT}/admin/login`,{
                 method:"POST",
                 headers:{
                     username : email,
@@ -59,7 +59,7 @@ export const Login = (props) => {
         }
        }else{
         try {
-            const response = await fetch('http://localhost:3000/users/login',{
+            const response = await fetch(`${PORT}/users/login`,{
                 method:"POST",
                 headers:{
                     username : email,

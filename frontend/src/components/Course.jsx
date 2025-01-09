@@ -39,7 +39,7 @@ export const Course = () => {
               return;
             }
         console.log("Fetching courses...");
-        fetch('http://localhost:3000/admin/courses', {
+        fetch(`${PORT}/admin/courses`, {
           method: 'GET',
           headers: {
             Authorization: "Bearer " + localStorage.getItem('token'),
@@ -62,7 +62,7 @@ export const Course = () => {
 
       async function submitHandler() {
         try {
-          const response = await fetch(`http://localhost:3000/admin/courses/${courseId}`, {
+          const response = await fetch(`${PORT}/admin/courses/${courseId}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ export const Course = () => {
       
       async function deleteHandler() {
         try {
-          const response = await fetch(`http://localhost:3000/admin/delete/${courseId}`, {
+          const response = await fetch(`${PORT}/admin/delete/${courseId}`, {
             method: 'DELETE',
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token'),

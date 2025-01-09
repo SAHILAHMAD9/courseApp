@@ -22,7 +22,7 @@ export const PurchasedCourses = () => {
     useEffect(() => {
       console.log("Fetching courses...");
     
-      fetch('http://localhost:3000/users/purchasedCourses', {
+      fetch(`${PORT}/users/purchasedCourses`, {
         method: 'GET',
         headers: {
           Authorization: "Bearer " + localStorage.getItem('token'),

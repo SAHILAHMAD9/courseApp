@@ -20,7 +20,7 @@ export const UcourseCard = (props) => {
 
     useEffect(() => {
       console.log("Fetching courses...");
-      fetch('http://localhost:3000/users/purchasedCourses', {
+      fetch(`${PORT}/users/purchasedCourses`, {
         method: 'GET',
         headers: {
           Authorization: "Bearer " + localStorage.getItem('token'),
@@ -48,7 +48,7 @@ export const UcourseCard = (props) => {
       return ;
     } else {
       try {
-        const response = await fetch(`http://localhost:3000/users/courses/${courseId}`, {
+        const response = await fetch(`${PORT}/users/courses/${courseId}`, {
           method:"POST",
           headers: {
               Authorization: "Bearer " + localStorage.getItem('token'),

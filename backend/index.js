@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose'); // Only declare once
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
-
+require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -10,6 +10,7 @@ const SECRET = "top s3cr3t";
 const { connectDB } = require('./db');
 connectDB();
 
+const PORT = process.env.PORT;
 
 const userSchema  = new mongoose.Schema({
   username : {type : String},
@@ -202,6 +203,6 @@ app.get('/users/purchasedCourses', authorization, async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log('Server is listening on port 3000');
 });

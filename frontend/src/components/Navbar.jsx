@@ -17,7 +17,7 @@ export const Navbar = (props) => {
 
     useEffect(() => {
       if (loggedIn ) {
-        fetch('http://localhost:3000/me', {
+        fetch(`${PORT}/me`, {
           method:'GET',
           headers: {
             'Content-Type': 'application/json',

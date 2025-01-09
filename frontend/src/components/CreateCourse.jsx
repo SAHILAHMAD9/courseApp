@@ -29,7 +29,7 @@ export const CreateCourse = (props) => {
       toast.error("Unauthorized User")
     } else {
       try {
-        const response = await fetch('http://localhost:3000/admin/courses',{
+        const response = await fetch(`${PORT}/admin/courses`,{
           method:"POST",
           body:JSON.stringify({
             title:course.title,

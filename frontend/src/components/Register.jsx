@@ -31,7 +31,7 @@ export const Register = (props) => {
       toast.error("Please check if username and password are filled!");
       return;
     } else {
-      const url = teacher ? 'http://localhost:3000/admin/signup' : 'http://localhost:3000/users/signup';
+      const url = teacher ? `${PORT}/admin/signup` : `${PORT}/users/signup`;
       const bodyData = { username: email, password: password };
       try {
         const response = await fetch(url, {

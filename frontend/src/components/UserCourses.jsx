@@ -17,7 +17,7 @@ console.log([course]);
 
   useEffect(() => {
     console.log("Fetching courses...");
-    fetch('http://localhost:3000/users/courses', {
+    fetch(`${PORT}/users/courses`, {
       method: 'GET',
       headers: {
         Authorization: "Bearer " + localStorage.getItem('token'),
