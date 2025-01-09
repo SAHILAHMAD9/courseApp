@@ -13,7 +13,7 @@ export const CreateCourse = (props) => {
   const loggedIn = localStorage.getItem('teacher') === 'true';
 //  const loggedIn = props.loggedIn;
  const navigate= useNavigate();
-
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
   function changeHandler(event) {
     const { name , value } = event.target;
     setCourse((prev) =>({
@@ -29,7 +29,7 @@ export const CreateCourse = (props) => {
       toast.error("Unauthorized User")
     } else {
       try {
-        const response = await fetch(`${PORT}/admin/courses`,{
+        const response = await fetch(`${backendUrl}/admin/courses`,{
           method:"POST",
           body:JSON.stringify({
             title:course.title,
