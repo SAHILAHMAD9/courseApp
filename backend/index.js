@@ -6,12 +6,14 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin:['https://course-app-s.vercel.app/'],
-  methods:["GET" ,'PUT' ,"POST" , "DELETE"],
-  credentials: true
+  origin: '*',  
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  
+  allowedHeaders: ['Content-Type', 'Authorization', 'Host']  
 }));
-const SECRET = "top s3cr3t";
-const { connectDB } = require('./db');
+
+
+const SECRET = "tops3cr3t";
+const { connectDB } = require('./db.js');
 connectDB();
 
 const PORT = process.env.PORT;
@@ -42,6 +44,12 @@ const courseSchema = new mongoose.Schema({
 const Users = mongoose.model('User', userSchema);
 const Admin = mongoose.model('Admin', adminSchema);
 const Course = mongoose.model('Course', courseSchema);
+
+app.get('/', (req, res) => {
+  console.log(`Welcome`);
+  res.send('Welcome to the server!');
+});
+
 
 const authorization = (req,res,next) =>{
     const authheader = req.headers.authorization;
@@ -160,7 +168,7 @@ app.post('/users/signup', async(req, res) => {  // tested
     const newUser = new Users(obj);  // or new User({ username, password })
     await newUser.save();
     const token = jwt.sign({username,role:'user'},SECRET,{expiresIn:'1h'});
-    res.json({ message: 'User created successfully', token });
+    res.json({ message: 'User created successfully', token , newUser });
   }
 });
 
@@ -169,7 +177,7 @@ app.post('/users/login', async(req, res) => { //tested
   const {username , password} = req.headers;
   const user = await Users.findOne({username,password});
   if(user){
-    const token = jwt.sign({username,role:'user'},SECRET,{expiresIn:"1h"});
+    // const token = jwt.sign({username,role:'user'},SECRET,{expiresIn:"1h"});
     res.json({ message: 'Logged in successfully', token });
   } else {
     res.status(403).json({ message: 'Invalid username or password' });
