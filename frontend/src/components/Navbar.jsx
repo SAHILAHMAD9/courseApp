@@ -14,10 +14,10 @@ export const Navbar = (props) => {
     const studentLoggedIn = localStorage.getItem('student') === 'true';
     const loggedIn = teacherLoggedIn || studentLoggedIn ;
     const [username , setUsername] = useState("");
-
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     useEffect(() => {
       if (loggedIn ) {
-        fetch(`${PORT}/me`, {
+        fetch(`${backendUrl}/me`, {
           method:'GET',
           headers: {
             'Content-Type': 'application/json',
