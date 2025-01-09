@@ -14,7 +14,7 @@ export const Login = (props) => {
     const loggedIn = teacherLoggedIn || studentLoggedIn ;
     // const loggedIn = props.loggedIn;
     // const setLoggedIn = props.setLoggedIn;
-
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const validateEmail = (email) => {
         // Regex to check email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,7 +33,7 @@ export const Login = (props) => {
        }else{
        if (teacher == true) {
         try {
-            const response = await fetch(`${PORT}/admin/login`,{
+            const response = await fetch(`${backendUrl}/admin/login`,{
                 method:"POST",
                 headers:{
                     username : email,
@@ -59,7 +59,7 @@ export const Login = (props) => {
         }
        }else{
         try {
-            const response = await fetch(`${PORT}/users/login`,{
+            const response = await fetch(`${backendUrl}/users/login`,{
                 method:"POST",
                 headers:{
                     username : email,
