@@ -6,7 +6,7 @@ const username = process.env.DB_USERNAME;
 const password = process.env.DB_PASSWORD;
 // console.log(username,password);
 
-const dbURI = `mongodb+srv://captainshaheenbagh:${password}@cluster0.sqtpm.mongodb.net/`;
+const dbURI = `mongodb+srv://captainshaheenbagh:TW8f2Tq4UxRW4SK5@cluster0.sqtpm.mongodb.net/`;
 
 
 const connectDB = async () => {
